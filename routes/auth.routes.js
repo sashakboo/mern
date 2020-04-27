@@ -17,16 +17,15 @@ router.post(
   async (req, res) => {
     try {
       const errors = validationResult(req);
-
-      if (!errors.isEmpty) {
+      
+      if (!errors.isEmpty()) {
         return res.status(400).json({ 
           errors: errors.array(),
-          message: 'Некорректные данные при регистрации'
+          message: 'Некорректные данные при регистрации.'
          });
-      }
+      }      
 
-
-      const {email, password} = req.body;  
+      const { email, password } = req.body;  
       const candidate = await User.findOne({ email });
 
       if (candidate) {
@@ -39,7 +38,6 @@ router.post(
 
       res.status(201).json({ message: 'Пользователь создан' });        
     } catch (error) {
-      console.log(error.message);
       res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
     }
   }
@@ -54,7 +52,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req);      
 
       if (!errors.isEmpty) {
         return res.status(400).json({ 
