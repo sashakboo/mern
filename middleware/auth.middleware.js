@@ -8,11 +8,11 @@ module.exports = (req, res, next) => {
 
   try {
     const token = req.headers.authorization.split(' ')[1];  // "Bearer TOKEN"
-    if (token) {
+    if (!token) {
       return res.status(401).json({ message: 'Не авторизован' });    
     }
 
-    const decoded = jwt.verify(token, config.get('jwtsecret'));
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
     req.user = decoded;
     next();
   } catch (e) {
